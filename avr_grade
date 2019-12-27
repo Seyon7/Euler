@@ -1,0 +1,30 @@
+def avr_grad(lst):
+    summ = 0
+    for i in range(1, len(lst)):
+        summ += int(line[i])
+    return summ / 3
+
+def gen_grad(subject_index, dataset):
+    sum = 0
+    count = 0
+    for line in dataset:
+        line = line.strip().split(';')
+        sum += int(line[subject_index])
+        count += 1
+    return sum / count
+
+
+with open('dataset.txt') as data:
+    for line in data:
+        line = line.strip().split(';')
+        with open('result.txt', 'a') as result:
+            result.write(str(avr_grad(line)) + '\n')
+        avr_student_grade = 0
+
+with open('dataset.txt') as data:
+    gen_subject_grad = ''
+    for i in range(1, 5):
+        gen_subject_grad += str(gen_grad(i, data))
+    with open('result.txt', 'a'):
+        result.write(gen_subject_grad)
+
