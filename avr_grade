@@ -1,30 +1,41 @@
-def avr_grad(lst):
-    summ = 0
-    for i in range(1, len(lst)):
-        summ += int(line[i])
-    return summ / 3
-
-def gen_grad(subject_index, dataset):
-    sum = 0
-    count = 0
-    for line in dataset:
+#отсекаю имя, возвращаю список со списком оценок
+def to_list(grade_data):
+    grad_list = []
+    for line in grade_data:
         line = line.strip().split(';')
-        sum += int(line[subject_index])
-        count += 1
-    return sum / count
+        del line[0]
+        grad_list.append(line)
+    return grad_list
+
+
+#записываю средние оценки по ученикам
+def adding_avr_stud_grade(grades_list):
+    for stud in grade_list:
+        stud_grade_sum = 0
+        for grade in stud:
+            stud_grade_sum += int(grade)
+        avr_stud_grade = stud_grade_sum / 3
+        with open('result.txt', 'a')as result:
+            result.write(str(avr_stud_grade) + '\n')
+    print('success')
+
+
+#Записываю средние оценки по предметам 
+def adding_subject_avr(grades_list):
+    math_sum, physics_sum, lang_sum = 0, 0, 0
+    for item in grade_list:
+        math_sum += int(item[0])
+        physics_sum += int(item[1])
+        lang_sum += int(item[2])
+    avr_math = math_sum / len(grade_list)
+    avr_physics = physics_sum / len(grade_list)
+    avr_lang = lang_sum / len(grade_list)
+    with open("result.txt", 'a') as result:
+        result.write(str(avr_math) + ' ' + str(avr_physics) + ' ' + str(avr_lang))
 
 
 with open('dataset.txt') as data:
-    for line in data:
-        line = line.strip().split(';')
-        with open('result.txt', 'a') as result:
-            result.write(str(avr_grad(line)) + '\n')
-        avr_student_grade = 0
-
-with open('dataset.txt') as data:
-    gen_subject_grad = ''
-    for i in range(1, 5):
-        gen_subject_grad += str(gen_grad(i, data))
-    with open('result.txt', 'a'):
-        result.write(gen_subject_grad)
+    grade_list = to_list(data)
+    adding_avr_stud_grade(grade_list)
+    adding_subject_avr(grade_list)
 
