@@ -1,0 +1,49 @@
+def getting_data():
+    while True:
+        match_count = int(input())
+        if match_count > 0 and match_count % 1 == 0:
+            break
+    match_list = []
+    for i in range(match_count):
+        match_list.append(input())
+    match_list = [match_list[i].split(";") for i in range(match_count)]
+    return match_list
+
+
+def count_matches(dataset: list):
+    f_clubs = []
+    command_set = set()
+    for item in dataset:
+        f_clubs.append(item[0])
+        f_clubs.append(item[2])
+    for i in range(len(f_clubs)):
+        command_set.add(f_clubs[i])
+    for command in command_set:
+        result_dic[command] = [f_clubs.count(command), 0, 0, 0, 0]
+    return result_dic
+
+
+def win_draw_defeat(dataset: list, dic: dict):
+    for i in range(len(dataset)):
+        if int(dataset[i][1]) > int(dataset[i][3]):
+            dic[dataset[i][0]][1] += 1
+            dic[dataset[i][0]][4] += 3
+            dic[dataset[i][2]][3] += 1
+        elif int(dataset[i][1]) == int(dataset[i][3]):
+            dic[dataset[i][0]][2] += 1
+            dic[dataset[i][0]][4] += 1
+            dic[dataset[i][2]][2] += 1
+            dic[dataset[i][2]][4] += 1
+        elif int(dataset[i][1]) < int(dataset[i][3]):
+            dic[dataset[i][2]][1] += 1
+            dic[dataset[i][2]][4] += 3
+            dic[dataset[i][0]][3] += 1
+    return dic
+
+
+result_dic = {}
+data = getting_data()
+count_matches(data)
+result_dic = win_draw_defeat(data, result_dic)
+for key in result_dic.keys():
+    print("{}:{} {} {} {} {}".format(key, result_dic[key][0], result_dic[key][1], result_dic[key][2], result_dic[key][3], result_dic[key][4]))
