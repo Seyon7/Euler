@@ -1,0 +1,35 @@
+def getting_data():
+    """Введите 4 строки: первые две - одинаковой длинны"""
+    while True:
+        original_data = input()
+        encrypted_original_data = input()
+        if len(original_data) == len(encrypted_original_data):
+            break
+    str_to_encrypt = input()
+    str_to_decipher = input()
+    return [original_data, encrypted_original_data, str_to_encrypt, str_to_decipher]
+
+
+def creating_alphabetical_dictionary(dataset: list):
+    """Создает словарь соответствий букв, например: а = в, в = к и т. д."""
+    alphabetical_dictionary = {}
+    for i in range(len(data[0])):
+        alphabetical_dictionary[data[0][i]] = data[1][i]
+    return alphabetical_dictionary
+
+
+def encrypting(dic: dict, content: str):
+    content = [i for i in content]
+    for i in range(len(content)):
+        if content[i] in dic.keys():
+            content[i] = dic[content[i]]
+    encrypted_str = ''
+    for i in range(len(content)):
+        encrypted_str.join(content[i])
+    print(encrypted_str)
+
+
+
+data = getting_data()
+dictionary = creating_alphabetical_dictionary(data)
+encrypting(dictionary, data[2])
