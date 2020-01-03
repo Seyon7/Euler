@@ -1,0 +1,31 @@
+def creation_dictionary():
+    """Получает кол-во слов и сами слова, переводит в нижний регистр и удаляет дубликаты"""
+    number_of_strings = int(input())
+    words = set()
+    for i in range(number_of_strings):
+        words.add(input().lower())
+    return words
+
+
+def get_strings_to_check():
+    number_of_strings = int(input())
+    words = set()
+    temp_list = []
+    for i in range(number_of_strings):
+        temp_list = input().split()
+        for j in range(len(temp_list)):
+            words.add(temp_list[j].lower())
+    return words
+
+
+def collecting_mistakes(correct_set: set, test_set: set):
+    mistakes_set = set()
+    mistakes_set = test_set.difference(correct_set)
+    return mistakes_set
+
+
+correct_words = creation_dictionary()
+words_for_checking = get_strings_to_check()
+mistakes = collecting_mistakes(correct_words, words_for_checking)
+for i in mistakes:
+    print(i)
