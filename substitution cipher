@@ -18,18 +18,39 @@ def creating_alphabetical_dictionary(dataset: list):
     return alphabetical_dictionary
 
 
-def encrypting(dic: dict, content: str):
+def encryption(dic: dict, content: str):
+    """Берет символы строки и сравниваеьт с ключами, если совпажает, то вместо символа
+    строки подставляеться символ из словаря по ключу"""
+
     content = [i for i in content]
     for i in range(len(content)):
         if content[i] in dic.keys():
             content[i] = dic[content[i]]
-    encrypted_str = ''
-    for i in range(len(content)):
-        encrypted_str.join(content[i])
-    print(encrypted_str)
+    encrypted_string = ''
+    for el in content:
+        encrypted_string += el
+    return encrypted_string
 
+
+def decryption(dic: dict, content: str):
+    """Берет символы строки и сравниваеьт с значениями словаря, если совпажает, то вместо символа
+        строки подставляеться ключ, значение которого совпало"""
+
+    content = [i for i in content]
+    for i in range(len(content)):
+        for k, v in dic.items():
+            if v == content[i]:
+                content[i] = k
+                break
+    decrypted_string = ''
+    for el in content:
+        decrypted_string += el
+    return decrypted_string
 
 
 data = getting_data()
 dictionary = creating_alphabetical_dictionary(data)
-encrypting(dictionary, data[2])
+encrypted_str = encryption(dictionary, data[2])
+decrypted_str = decryption(dictionary, data[3])
+print(encrypted_str)
+print(decrypted_str)
